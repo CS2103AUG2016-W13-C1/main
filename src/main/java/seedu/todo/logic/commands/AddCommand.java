@@ -25,14 +25,15 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
-    public AddCommand(String name, String detail, String fromDate, String tillDate)
+    public AddCommand(String name, String detail, String fromDate, String tillDate, String priority)
             throws IllegalValueException {
         
         this.toAdd = new Task(
                 new Name(name),
                 new Detail(detail),
                 new TaskDate(fromDate),
-                new TaskDate(tillDate)
+                new TaskDate(tillDate),
+                new Priority(priority)
         );
     }
 

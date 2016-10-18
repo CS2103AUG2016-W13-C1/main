@@ -96,6 +96,11 @@ public class SearchCommand extends Command {
         case 7 : //undone search
             model.updateFilteredListToShowAllNotCompleted();
             return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+            
+        case 8 : //priority search
+        	String priority = data.split("priority")[1].trim().toLowerCase();
+            model.updateFilteredTaskListByPriority(priority);
+            return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
                 
         default :
             return new CommandResult(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
