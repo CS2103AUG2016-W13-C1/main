@@ -8,6 +8,7 @@ import seedu.todo.model.tag.UniqueTagList;
 import seedu.todo.model.tag.UniqueTagList.DuplicateTagException;
 import seedu.todo.model.task.Detail;
 import seedu.todo.model.task.Name;
+import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.TaskDate;
@@ -34,12 +35,14 @@ public class UpdateCommand extends Command{
     private final String detail;
     private final String onDateTime;
     private final String byDateTime;
+    private final String priority;
     
-    public UpdateCommand(int targetIndex, String name, String onDateTime, String byDateTime, String detail) {
+    public UpdateCommand(int targetIndex, String name, String onDateTime, String byDateTime, String priority, String detail) {
         System.out.println("HELLO" + onDateTime);
         this.targetIndex = targetIndex;
         this.name = name;
         this.detail = detail;
+        this.priority = priority;
         this.onDateTime = onDateTime;
         this.byDateTime = byDateTime;
     }
@@ -63,6 +66,7 @@ public class UpdateCommand extends Command{
             Detail newDetail;
             TaskDate newByDate;
             TaskDate newOnDate;
+            Priority newPriority;
             
             if (this.detail == null) {
                 newDetail = taskToUpdate.getDetail();
@@ -82,8 +86,10 @@ public class UpdateCommand extends Command{
                 newOnDate = this.onDateTime.trim().equals("-") ?  new TaskDate(null) : new TaskDate(this.onDateTime);
             }
             
+            newPriority = new Priority(this.priority);
+            
             Task newTask = new Task(newName, newDetail, taskToUpdate.isDone(), 
-                    newOnDate, newByDate, taskToUpdate.getTags());
+                    newOnDate, newByDate, taskToUpdate.getTags(), newPriority);
             model.updateTask(taskToUpdate, newTask);
             model.updateFilteredListToShowAll();
             

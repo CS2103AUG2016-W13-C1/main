@@ -12,6 +12,7 @@ public interface ReadOnlyTask {
     Detail getDetail();
     TaskDate getOnDate();
     TaskDate getByDate();
+    Priority getPriority();
     boolean isDone();
 
     /**
@@ -29,7 +30,8 @@ public interface ReadOnlyTask {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDetail().equals(this.getDetail())
                 && other.getOnDate().equals(this.getOnDate())
-                && other.getByDate().equals(this.getByDate()));
+                && other.getByDate().equals(this.getByDate())
+                && other.getPriority().equals(this.getPriority()));
     }
 
     /**
@@ -44,6 +46,8 @@ public interface ReadOnlyTask {
                 .append(getOnDate())
                 .append(" Till: ")
                 .append(getByDate())
+                .append(" Priority: ")
+                .append(getPriority())
                 .append(" Tags: ");
         //getTags().forEach(builder::append);
         return builder.toString();
@@ -62,5 +66,6 @@ public interface ReadOnlyTask {
             return buffer.substring(0, buffer.length() - separator.length());
         }
     }
+	
 
 }

@@ -16,28 +16,31 @@ public class Task implements ReadOnlyTask {
     private Detail detail;
     private TaskDate onDate;
     private TaskDate byDate; //deadline
+    private Priority priority;
     private boolean done;
     private UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Detail detail, TaskDate fromDate, TaskDate tillDate) {
+    public Task(Name name, Detail detail, TaskDate fromDate, TaskDate tillDate, Priority priority) {
         assert !CollectionUtil.isAnyNull(name, detail, fromDate, tillDate);
         this.name = name;
         this.detail = detail;
         this.onDate = fromDate;
         this.byDate = tillDate;
+        this.priority = priority;
         this.done = false;
         this.tags = new UniqueTagList(); // protect internal tags from changes in the arg list
     }
     
-    public Task(Name name, Detail detail, boolean done, TaskDate fromDate, TaskDate tillDate, UniqueTagList tags) {
+    public Task(Name name, Detail detail, boolean done, TaskDate fromDate, TaskDate tillDate, UniqueTagList tags, Priority priority) {
         assert !CollectionUtil.isAnyNull(name, detail, fromDate, tillDate);
         this.name = name;
         this.detail = detail;
         this.onDate = fromDate;
         this.byDate = tillDate;
+        this.priority = priority;
         this.done = done;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
@@ -46,7 +49,7 @@ public class Task implements ReadOnlyTask {
      * Copy constructor.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getName(), source.getDetail(), false, source.getOnDate(), source.getByDate(), source.getTags());
+        this(source.getName(), source.getDetail(), false, source.getOnDate(), source.getByDate(), source.getTags(), source.getPriority());
     }
 
     @Override
@@ -67,6 +70,11 @@ public class Task implements ReadOnlyTask {
     @Override
     public TaskDate getByDate() {
         return this.byDate;
+    }
+    
+    @Override
+    public Priority getPriority() {
+        return this.priority;
     }
 
     @Override
@@ -100,6 +108,12 @@ public class Task implements ReadOnlyTask {
         this.done = done;
     }
     
+	public void setPriority(Priority priority) {
+		// TODO Auto-generated method stub
+		this.priority = priority;
+		
+	}
+    
     /**
      * Add a tag to the task's tag list 
      */
@@ -131,12 +145,14 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, detail, onDate, byDate, tags);
+        return Objects.hash(name, detail, onDate, byDate, priority, tags);
     }
 
     @Override
     public String toString() {
         return getAsText();
     }
+
+
 
 }

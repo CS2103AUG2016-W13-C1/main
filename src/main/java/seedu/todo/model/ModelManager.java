@@ -113,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
             toDoList.getTasks().get(index).setDetail(newTask.getDetail());
             toDoList.getTasks().get(index).setOnDate(newTask.getOnDate());
             toDoList.getTasks().get(index).setByDate(newTask.getByDate());
+            toDoList.getTasks().get(index).setPriority(newTask.getPriority());
             toDoList.syncTagsWithMasterList(toDoList.getTasks().get(index));
             indicateToDoListChanged();
         }
@@ -188,7 +189,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskListFromTillDate(LocalDateTime fromDateTime, LocalDateTime tillDateTime){
         updateFilteredTaskList(new PredicateExpression(new FromTillDateQualifier(fromDateTime, tillDateTime)));
     }
-    
+
+	@Override
+	public void updateFilteredTaskListByPriority(String priority) {
+		// TODO Auto-generated method stub
+		updateFilteredTaskList(new PredicateExpression(new PriorityQualifier(priority)));
+		
+	}
     
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
@@ -219,5 +226,7 @@ public class ModelManager extends ComponentManager implements Model {
             return qualifier.toString();
         }
     }
+
+
     
 }

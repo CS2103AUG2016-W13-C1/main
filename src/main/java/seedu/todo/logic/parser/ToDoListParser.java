@@ -108,15 +108,15 @@ public class ToDoListParser {
                 if (matcher.matches()) {
                     if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_FT)) {
                         return new AddCommand(matcher.group("name"), matcher.group("detail"),
-                                matcher.group("onDateTime"), matcher.group("byDateTime"));
+                                matcher.group("onDateTime"), matcher.group("byDateTime"), matcher.group("priority"));
                     } else if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_ON)) {
                         return new AddCommand(matcher.group("name"), matcher.group("detail"),
-                                matcher.group("onDateTime"), null);
+                                matcher.group("onDateTime"), null, matcher.group("priority"));
                     } else if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_BY)) {
                         return new AddCommand(matcher.group("name"), matcher.group("detail"), null,
-                                matcher.group("byDateTime"));
+                                matcher.group("byDateTime"), matcher.group("priority"));
                     } else {
-                        return new AddCommand(matcher.group("name"), matcher.group("detail"), null, null);
+                        return new AddCommand(matcher.group("name"), matcher.group("detail"), null, null, matcher.group("priority"));
                     }
                 }
             }
@@ -263,14 +263,14 @@ public class ToDoListParser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }
 
-        String name = null, onDate = null, byDate = null, detail = null;
+        //String name = null, onDate = null, byDate = null, detail = null;
         args = args.substring(1).trim();
 
         Matcher matcher;
         matcher = ParserFormats.UPDATE_TASK_ARGS_FORMAT.matcher(args.trim());
         if (matcher.matches()) {
             return new UpdateCommand(index.get(), matcher.group("name").trim(), matcher.group("onDateTime"), 
-                    matcher.group("byDateTime"), matcher.group("detail"));
+                    matcher.group("byDateTime"), matcher.group("detail"), matcher.group("priority"));
         } else {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
         }  
