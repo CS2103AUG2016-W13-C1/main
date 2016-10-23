@@ -20,16 +20,16 @@ public class ParserFormats {
     public static final Pattern KEYWORDS_ARGS_FORMAT = Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); 
     
     public static final Pattern ADD_TASK_ARGS_FORMAT_FT = Pattern.compile(
-            "(?<name>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " by (?<byDateTime>[^;]+)" + "(?: ?; ?(?<detail>.+))?" + "(?<priority>[^/]+)");
+            "(?<name>[^/]+)" + " priority (?<priority>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " by (?<byDateTime>[^;]+)" + "(?: ?; ?(?<detail>.+))?" );
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_ON = Pattern
-            .compile("(?<name>[^/]+) on (?<onDateTime>[^;]+)(?: ?; ?(?<detail>.+))? (?<priority>[^/]+)");
+            .compile("(?<name>[^/]+) priority (?<priority>[^/]+) on (?<onDateTime>[^;]+)(?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_BY = Pattern
-            .compile("(?<name>[^/]+) by (?<byDateTime>[^;]+)(?: ?; ?(?<detail>.+))? (?<priority>[^/]+)");
+            .compile("(?<name>[^/]+) priority (?<priority>[^/]+) by (?<byDateTime>[^;]+)(?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_FLOAT = Pattern
-            .compile("(?<name>[a-zA-Z_0-9 ]+)(?: ?; ?(?<detail>.+))? (?<priority>[^/]+)");
+            .compile("(?<name>[a-zA-Z_0-9 ]+) priority (?<priority>[^/]+) (?: ?; ?(?<detail>.+))?");
         
     public static final Pattern SEARCH_TASK_ARGS_FORMAT_ON = Pattern
             .compile("on (?<onDateTime>.+)");

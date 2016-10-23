@@ -38,6 +38,9 @@
                         </HBox>
                         <Label fx:id="details" styleClass="cell_small_label" text="\$details" translateY="-30.0" />
                     </children>
+                    </HBox>
+                        <Label fx:id="priority" styleClass="cell_small_label" text="\$priority" translateY="-60.0" />
+                    </children>
                 </VBox>
             <VBox alignment="CENTER_LEFT" maxHeight="150.0" minHeight="105.0" prefHeight="115.0" GridPane.columnIndex="1">
                <stylesheets>

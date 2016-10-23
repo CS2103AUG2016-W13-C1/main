@@ -25,7 +25,7 @@ public class XmlAdaptedTask {
     private String tillDate;
     @XmlElement
     private String done;
-    @XmlElement(required = true)
+    @XmlElement
     private String priority;
     
     @XmlElement
