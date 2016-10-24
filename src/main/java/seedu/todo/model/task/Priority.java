@@ -44,6 +44,10 @@ public class Priority {
                 || (other instanceof Priority // instanceof handles nulls
                 && this.priorityLevel.equals(((Priority) other).priorityLevel)); // state check
     }
+    
+    public String getPriority() {
+        return this.priorityLevel;
+    }
 
     @Override
     public int hashCode() {
