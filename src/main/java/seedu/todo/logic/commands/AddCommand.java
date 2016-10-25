@@ -11,11 +11,11 @@ public class AddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the to do list. "
-            + "Parameters: TASKNAME on STARTDATE by ENDDATE ; DETAILS...\n"
+            + "Parameters: TASKNAME priority PRIORITY on STARTDATE by ENDDATE ; DETAILS...\n"
             + "Example: " + COMMAND_WORD
-            + " get groceries on 10/10/2016 by 11/10/2016 ; bread, fruits, cinnamon powder, red pepper";
+            + " get groceries priority mid on 10/10/2016 by 11/10/2016 ; bread, fruits, cinnamon powder, red pepper";
 
-    public static final String MESSAGE_SUCCESS = "New task added! Name : %1$s";
+    public static final String MESSAGE_SUCCESS = "New task added! Name : %1$s %2$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the to do list";
 
     private final Task toAdd;
@@ -42,7 +42,7 @@ public class AddCommand extends Command {
         assert model != null;
         try {
             model.addTask(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getName()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.toString()));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }

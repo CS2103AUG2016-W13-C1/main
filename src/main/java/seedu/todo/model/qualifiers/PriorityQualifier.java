@@ -1,11 +1,12 @@
 package seedu.todo.model.qualifiers;
 
+import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 
 public class PriorityQualifier implements Qualifier {
-    private String priority;
+    private Priority priority;
 
-    public PriorityQualifier(String priority) {
+    public PriorityQualifier(Priority priority) {
         this.priority = priority;
     }
 
@@ -17,7 +18,7 @@ public class PriorityQualifier implements Qualifier {
 
     @Override
     public String toString() {
-        return "priority=" + priority;
+        return "priority=" + priority.toString();
     }
 
 }

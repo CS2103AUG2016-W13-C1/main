@@ -23,24 +23,26 @@ public class Task implements ReadOnlyTask {
     /**
      * Every field must be present and not null.
      */
-    public Task(Name name, Detail detail, TaskDate fromDate, TaskDate tillDate, Priority priority) {
+    public Task(Name name, Detail detail, boolean done, TaskDate fromDate, TaskDate tillDate, Priority priority) {
         assert !CollectionUtil.isAnyNull(name, detail, fromDate, tillDate);
         this.name = name;
         this.detail = detail;
         this.onDate = fromDate;
         this.byDate = tillDate;
         this.priority = priority;
+        //System.out.println("hello" + this.priority.toString());
         this.done = false;
         this.tags = new UniqueTagList(); // protect internal tags from changes in the arg list
     }
     
-    public Task(Name name, Detail detail, boolean done, TaskDate fromDate, TaskDate tillDate, UniqueTagList tags, Priority priority) {
+    public Task(Name name, Detail detail, boolean done, TaskDate fromDate, TaskDate tillDate, Priority priority, UniqueTagList tags) {
         assert !CollectionUtil.isAnyNull(name, detail, fromDate, tillDate);
         this.name = name;
         this.detail = detail;
         this.onDate = fromDate;
         this.byDate = tillDate;
         this.priority = priority;
+        //System.out.println("hello" + this.priority.toString());
         this.done = done;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
@@ -49,7 +51,7 @@ public class Task implements ReadOnlyTask {
      * Copy constructor.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getName(), source.getDetail(), false, source.getOnDate(), source.getByDate(), source.getTags(), source.getPriority());
+        this(source.getName(), source.getDetail(), false, source.getOnDate(), source.getByDate(), source.getPriority(), source.getTags());
     }
 
     @Override

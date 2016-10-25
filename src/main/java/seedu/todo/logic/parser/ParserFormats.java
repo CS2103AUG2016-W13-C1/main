@@ -20,17 +20,26 @@ public class ParserFormats {
     public static final Pattern KEYWORDS_ARGS_FORMAT = Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); 
     
     public static final Pattern ADD_TASK_ARGS_FORMAT_FT = Pattern.compile(
-            "(?<name>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " by (?<byDateTime>[^;]+)" + "(?: ?; ?(?<detail>.+))?" + "(?<priority>[^/]+)");
+            "(?<name>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " by (?<byDateTime>[^;]+)" + "(?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_ON = Pattern
-            .compile("(?<name>[^/]+) on (?<onDateTime>[^;]+)(?: ?; ?(?<detail>.+))? (?<priority>[^/]+)");
+            .compile("(?<name>[^/]+)" + " on (?<onDateTime>[^;]+) " + " (?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_BY = Pattern
-            .compile("(?<name>[^/]+) by (?<byDateTime>[^;]+)(?: ?; ?(?<detail>.+))? (?<priority>[^/]+)");
+            .compile("(?<name>[^/]+)" + " by (?<byDateTime>[^;]+) " + " (?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_FLOAT = Pattern
-            .compile("(?<name>[a-zA-Z_0-9 ]+)(?: ?; ?(?<detail>.+))? (?<priority>[^/]+)");
-        
+            .compile("(?<name>[^/]+)" + " (?: ?; ?(?<detail>.+))?");
+    
+    public static final Pattern ADD_TASK_ARGS_PRIORITY_FORMAT_FT = Pattern.compile(
+            "(?<name>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " (by|to) (?<byDateTime>[^;]+)" + " (priority) (?<priority>[^;]+)" + "(?: ?; ?(?<detail>.+))?", Pattern.CASE_INSENSITIVE);
+
+    public static final Pattern ADD_TASK_ARGS_PRIORITY_FORMAT_ON = Pattern
+            .compile("(?<name>[^/]+) (on|from) (?<onDateTime>[^;]+)" + " (priority) (?<priority>[^;]+)" + "(?: ?; ?(?<detail>.+))?", Pattern.CASE_INSENSITIVE);
+
+    public static final Pattern ADD_TASK_ARGS_PRIORITY_FORMAT_BY = Pattern
+            .compile("(?<name>[^/]+) (by|to) (?<byDateTime>[^;]+)" + " (priority) (?<priority>[^;]+)" + "(?: ?; ?(?<detail>.+))?", Pattern.CASE_INSENSITIVE);
+    
     public static final Pattern SEARCH_TASK_ARGS_FORMAT_ON = Pattern
             .compile("on (?<onDateTime>.+)");
     

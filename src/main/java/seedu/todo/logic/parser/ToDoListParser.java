@@ -108,15 +108,24 @@ public class ToDoListParser {
                 if (matcher.matches()) {
                     if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_FT)) {
                         return new AddCommand(matcher.group("name"), matcher.group("detail"),
-                                matcher.group("onDateTime"), matcher.group("byDateTime"), matcher.group("priority"));
+                                matcher.group("onDateTime"), matcher.group("byDateTime"), "low");
                     } else if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_ON)) {
                         return new AddCommand(matcher.group("name"), matcher.group("detail"),
-                                matcher.group("onDateTime"), null, matcher.group("priority"));
+                                matcher.group("onDateTime"), null, "low");
                     } else if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_BY)) {
                         return new AddCommand(matcher.group("name"), matcher.group("detail"), null,
-                                matcher.group("byDateTime"), matcher.group("priority"));
+                                matcher.group("byDateTime"), "low");
+                    } else if (p.equals(ParserFormats.ADD_TASK_ARGS_FORMAT_FLOAT)){
+                        return new AddCommand(matcher.group("name"), matcher.group("detail"), null, null, "low");
+                    } else if (p.equals(ParserFormats.ADD_TASK_ARGS_PRIORITY_FORMAT_FT)) {
+                        return new AddCommand(matcher.group("name"), matcher.group("detail"),
+                                matcher.group("onDateTime"), matcher.group("byDateTime"), matcher.group("priority"));                   	
+                    } else if (p.equals(ParserFormats.ADD_TASK_ARGS_PRIORITY_FORMAT_ON)) {
+                        return new AddCommand(matcher.group("name"), matcher.group("detail"),
+                                matcher.group("onDateTime"), null, matcher.group("priority"));
                     } else {
-                        return new AddCommand(matcher.group("name"), matcher.group("detail"), null, null, matcher.group("priority"));
+                        return new AddCommand(matcher.group("name"), matcher.group("detail"), null, 
+                        		matcher.group("byDateTime"), matcher.group("priority"));
                     }
                 }
             }
