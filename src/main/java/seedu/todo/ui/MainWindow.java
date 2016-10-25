@@ -1,5 +1,6 @@
 package seedu.todo.ui;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import seedu.todo.commons.core.GuiSettings;
 import seedu.todo.commons.events.ui.ExitAppRequestEvent;
 import seedu.todo.logic.Logic;
 import seedu.todo.model.UserPrefs;
+import seedu.todo.model.tag.Tag;
 import seedu.todo.model.task.ReadOnlyTask;
 
 /**
@@ -36,6 +38,7 @@ public class MainWindow extends UiPart {
     private CommandBox commandBox;
     private Config config;
     private UserPrefs userPrefs;
+    private TagListPanel tagListPanel;
 
     // Handles to elements of this Ui container
     private VBox rootLayout;
@@ -45,6 +48,10 @@ public class MainWindow extends UiPart {
 
     @FXML
     private AnchorPane browserPlaceholder;
+    
+    //@@author A0142421X
+    @FXML
+    private AnchorPane tagListPanelPlaceholder;
 
     @FXML
     private AnchorPane commandBoxPlaceholder;
@@ -109,11 +116,25 @@ public class MainWindow extends UiPart {
 
     public void fillInnerParts() {
         browserPanel = BrowserPanel.load(browserPlaceholder);
-        taskListPanel = taskListPanel.load(primaryStage, getTaskListPlaceholder(), 
-                logic.getUnmodifiableFilteredTaskList());
+    	//@@author A0142421X
+    	tagListPanel = TagListPanel.load(primaryStage, getTagListPanelPlaceholder(), logic.getTagList());
+        //@@author A0138967J
+        summaryPanel = SummaryPanel.load(primaryStage, getSummaryPlaceholder(), logic.getUnmodifiableTodayTaskList());
+        //@@author
+        taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getUnmodifiableFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+    }
+    
+    //@@author A0142421X
+    private AnchorPane getTagListPanelPlaceholder(){
+    	return tagListPanelPlaceholder;
+    }
+    
+    //@@author A0138967J
+    private AnchorPane getSummaryPlaceholder(){
+        return summaryPlaceholder;
     }
 
     private AnchorPane getCommandBoxPlaceholder() {

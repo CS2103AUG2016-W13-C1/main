@@ -1,11 +1,13 @@
 package seedu.todo.model;
 
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.todo.commons.core.ComponentManager;
 import seedu.todo.commons.core.LogsCenter;
 import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.commons.events.model.ToDoListChangedEvent;
 import seedu.todo.model.qualifiers.*;
+import seedu.todo.model.tag.Tag;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.UniqueTaskList;
@@ -24,6 +26,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final ToDoList toDoList;
     private final FilteredList<Task> filteredTasks;
+    private final FilteredList<Task> todayTasks;
+    private final FilteredList<Tag> filteredTags;
 
     /**
      * Initializes a ModelManager with the given ToDoList
@@ -37,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with to-do app: " + src + " and user prefs " + userPrefs);
 
         toDoList = new ToDoList(src);
+        filteredTags = new FilteredList<>(toDoList.getTags());
         filteredTasks = new FilteredList<>(toDoList.getTasks());
     }
 
@@ -47,6 +52,9 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
+        todayTasks = new FilteredList<>(toDoList.getTasks());
+        filteredTags = new FilteredList<>(toDoList.getTags());
+        updateTodayListToShowAll();
     }
 
     @Override
@@ -133,7 +141,25 @@ public class ModelManager extends ComponentManager implements Model {
     public UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList() {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
-
+    
+    @Override
+    public ModifiableObservableList<Task> getFilteredTaskList() {
+        return new ModifiableObservableList<>(filteredTasks);
+    }
+    
+    public UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList() {
+        return new UnmodifiableObservableList<>(todayTasks);
+    } 
+    
+    public UnmodifiableObservableList<Tag> getUnmodifiableTagList() {
+    	return new UnmodifiableObservableList<>(filteredTags);
+    }
+    
+    //@@author A0138967J
+    public void updateTodayListToShowAll() {
+        todayTasks.setPredicate((new PredicateExpression(new TodayDateQualifier(LocalDateTime.now())))::satisfies);
+    }
+    //@@author
     @Override
     public void updateFilteredListToShowAll() {
         updateFilteredTaskList(new PredicateExpression(new CompletedQualifier(true))); //false change

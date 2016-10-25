@@ -49,6 +49,10 @@ public class ToDoList implements ReadOnlyToDoList {
     public ObservableList<Task> getTasks() {
         return tasksHistory.peek().getInternalList();
     }
+    
+    public ObservableList<Tag> getTags() {
+    	return tagsHistory.peek().getInternalList();
+    }
 
     
     public void resetData(Collection<? extends ReadOnlyTask> newTasks, Collection<Tag> newTags) {
@@ -162,9 +166,11 @@ public class ToDoList implements ReadOnlyToDoList {
 //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        UniqueTagList newList = this.createNewTagList(this.tagsHistory.peek().getInternalList());
-        newList.add(t);
-        this.tagsHistory.push(newList);
+        UniqueTagList topList = this.tagsHistory.pop();
+        UniqueTagList oldList = this.createNewTagList(topList.getInternalList());
+        this.tagsHistory.push(oldList);
+        this.tagsHistory.push(topList);
+        topList.add(t);
     }
 
 //// util methods
@@ -185,7 +191,7 @@ public class ToDoList implements ReadOnlyToDoList {
     public List<Tag> getTagList() {
         return Collections.unmodifiableList(tagsHistory.peek().getInternalList());
     }
-
+    
     @Override
     public UniqueTaskList getUniqueTaskList() {
         return this.tasksHistory.peek();
