@@ -20,16 +20,16 @@ public class ParserFormats {
     public static final Pattern KEYWORDS_ARGS_FORMAT = Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); 
     
     public static final Pattern ADD_TASK_ARGS_FORMAT_FT = Pattern.compile(
-            "(?<name>[^/]+)" + " priority (?<priority>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " by (?<byDateTime>[^;]+)" + "(?: ?; ?(?<detail>.+))?" );
+            "(?<name>[^/].+?(?= priority))" + " priority (?<priority>[^/]+)" + " (on|from) (?<onDateTime>.+)" + " by (?<byDateTime>[^;]+)" + "(?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_ON = Pattern
-            .compile("(?<name>[^/]+)" + " priority (?<priority>[^/]+) " + " on (?<onDateTime>[^;]+) " + " (?: ?; ?(?<detail>.+))?");
+            .compile("(?<name>[^/].+?(?= priority))" + " priority (?<priority>[^/]+) " + " on (?<onDateTime>[^;]+) " + " (?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_BY = Pattern
-            .compile("(?<name>[^/]+)" + " priority (?<priority>[^/]+) " + " by (?<byDateTime>[^;]+) " + " (?: ?; ?(?<detail>.+))?");
+            .compile("(?<name>[^/].+?(?= priority))" + " priority (?<priority>[^/]+) " + " by (?<byDateTime>[^;]+) " + " (?: ?; ?(?<detail>.+))?");
 
     public static final Pattern ADD_TASK_ARGS_FORMAT_FLOAT = Pattern
-            .compile("(?<name>[^/]+)" + " priority (?<priority>[^/]+) " + " (?: ?; ?(?<detail>.+))?");
+            .compile("(?<name>[^/].+?(?= priority))" + " priority (?<priority>[^/]+) " + " (?: ?; ?(?<detail>.+))?");
         
     public static final Pattern SEARCH_TASK_ARGS_FORMAT_ON = Pattern
             .compile("on (?<onDateTime>.+)");
