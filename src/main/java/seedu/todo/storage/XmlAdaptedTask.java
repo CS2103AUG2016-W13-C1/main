@@ -78,6 +78,6 @@ public class XmlAdaptedTask {
         final TaskDate tillDate = new TaskDate(this.tillDate);
         final Priority priority = new Priority(this.priority);
         final UniqueTagList tags = new UniqueTagList(taskTags);
-        return new Task(name, detail, done, fromDate, tillDate, tags, priority);
+        return new Task(name, detail, done, fromDate, tillDate, priority, tags);
     }
 }

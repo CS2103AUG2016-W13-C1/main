@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.todo.commons.core.Messages;
+import seedu.todo.commons.exceptions.IllegalValueException;
 import seedu.todo.commons.util.DateTimeUtil;
+import seedu.todo.model.task.Priority;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -98,9 +100,14 @@ public class SearchCommand extends Command {
             return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
             
         case 8 : //priority search
-        	String priority = data.split("priority")[1].trim().toLowerCase();
-            model.updateFilteredTaskListByPriority(priority);
-            return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+            try {
+                String priority = data.split("priority")[1].trim().toLowerCase();
+                model.updateFilteredTaskListByPriority(new Priority(priority));
+                return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+            } catch (IllegalValueException e) {
+                return new CommandResult(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+            }
+        	
                 
         default :
             return new CommandResult(Messages.MESSAGE_INVALID_COMMAND_FORMAT);

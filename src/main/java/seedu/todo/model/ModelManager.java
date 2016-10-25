@@ -9,6 +9,7 @@ import seedu.todo.commons.events.model.ToDoListChangedEvent;
 import seedu.todo.commons.util.DateTimeUtil;
 import seedu.todo.commons.util.StringUtil;
 import seedu.todo.model.qualifiers.*;
+import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.TaskDate;
@@ -191,7 +192,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 	@Override
-	public void updateFilteredTaskListByPriority(String priority) {
+	public void updateFilteredTaskListByPriority(Priority priority) {
 		// TODO Auto-generated method stub
 		updateFilteredTaskList(new PredicateExpression(new PriorityQualifier(priority)));
 		

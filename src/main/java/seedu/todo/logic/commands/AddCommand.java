@@ -31,6 +31,7 @@ public class AddCommand extends Command {
         this.toAdd = new Task(
                 new Name(name),
                 new Detail(detail),
+                false,
                 new TaskDate(fromDate),
                 new TaskDate(tillDate),
                 new Priority(priority)

@@ -7,6 +7,7 @@ import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.UniqueTaskList;
+import seedu.todo.model.task.Priority;
 
 import java.time.LocalDateTime;
 
@@ -74,5 +75,5 @@ public interface Model {
     void updateFilteredTaskListFromTillDate(LocalDateTime fromDateTime, LocalDateTime tillDateTime);
 
     /** Updates the filter of the filtered task list to filter by the given priority*/
-	void updateFilteredTaskListByPriority(String priority);
+	void updateFilteredTaskListByPriority(Priority priority);
 }

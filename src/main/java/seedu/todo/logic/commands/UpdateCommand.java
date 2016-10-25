@@ -89,7 +89,7 @@ public class UpdateCommand extends Command{
             newPriority = new Priority(this.priority);
             
             Task newTask = new Task(newName, newDetail, taskToUpdate.isDone(), 
-                    newOnDate, newByDate, taskToUpdate.getTags(), newPriority);
+                    newOnDate, newByDate, newPriority, taskToUpdate.getTags());
             model.updateTask(taskToUpdate, newTask);
             model.updateFilteredListToShowAll();
             
