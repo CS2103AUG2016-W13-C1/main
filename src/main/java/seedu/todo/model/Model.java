@@ -39,13 +39,14 @@ public interface Model {
     void updateTaskTags(ReadOnlyTask oldTask, ReadOnlyTask newTask) throws UniqueTaskList.TaskNotFoundException;
     
 
-    /** Returns the filtered person list as an {@code ModifiableObservableList<Task>} */
+    /** Returns the filtered task list as an {@code ModifiableObservableList<Task>} */
     ModifiableObservableList<Task> getFilteredTaskList();
     
-    /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList();
 
-
+    UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList();
+    
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
     
@@ -72,4 +73,7 @@ public interface Model {
     
     /** Updates the filter of the filtered task list to filter by the given from and till dates*/
     void updateFilteredTaskListFromTillDate(LocalDateTime fromDateTime, LocalDateTime tillDateTime);
+    
+    /** Updates the filter of the filtered task list to filter for today's date only */
+    void updateFilteredTaskListTodayDate(LocalDateTime datetime);
 }
