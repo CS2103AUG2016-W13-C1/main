@@ -118,8 +118,6 @@ public class MainWindow extends UiPart {
         browserPanel = BrowserPanel.load(browserPlaceholder);
     	//@@author A0142421X
     	tagListPanel = TagListPanel.load(primaryStage, getTagListPanelPlaceholder(), logic.getTagList());
-        //@@author A0138967J
-        summaryPanel = SummaryPanel.load(primaryStage, getSummaryPlaceholder(), logic.getUnmodifiableTodayTaskList());
         //@@author
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getUnmodifiableFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
@@ -130,11 +128,6 @@ public class MainWindow extends UiPart {
     //@@author A0142421X
     private AnchorPane getTagListPanelPlaceholder(){
     	return tagListPanelPlaceholder;
-    }
-    
-    //@@author A0138967J
-    private AnchorPane getSummaryPlaceholder(){
-        return summaryPlaceholder;
     }
 
     private AnchorPane getCommandBoxPlaceholder() {

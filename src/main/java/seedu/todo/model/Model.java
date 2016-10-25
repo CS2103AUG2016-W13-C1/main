@@ -2,7 +2,6 @@ package seedu.todo.model;
 
 import java.util.Set;
 import javafx.collections.ObservableList;
-import seedu.todo.commons.core.ModifiableObservableList;
 import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.model.tag.Tag;
 import seedu.todo.model.task.ReadOnlyTask;
@@ -41,8 +40,6 @@ public interface Model {
         
     /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList();
-
-    UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList();
     
     UnmodifiableObservableList<Tag> getUnmodifiableTagList();
     
