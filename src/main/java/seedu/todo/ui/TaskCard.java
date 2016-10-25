@@ -44,23 +44,12 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
-        name.setText(task.getName().fullName);
+        name.setText(task.getPriority().toString());
         id.setText(displayedIndex + ". ");
         details.setText(task.getDetail().value);
         onDate.setText(task.getOnDate().toString());
         byDate.setText(task.getByDate().toString());
         priority.setText(task.getPriority().toString());
-        switch(task.getPriority().priorityLevel) {
-        	case "low": 
-        			priority.setTextFill(Color.LAWNGREEN);
-        			break;
-        	case "mid":
-        			priority.setTextFill(Color.GOLD);
-        			break;
-        	case "high":
-        			priority.setTextFill(Color.RED);
-        			break;
-        }
         tags.setText(task.tagsString());
     }
 
