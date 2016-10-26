@@ -117,7 +117,7 @@ public class MainWindow extends UiPart {
     public void fillInnerParts() {
         browserPanel = BrowserPanel.load(browserPlaceholder);
     	//@@author A0142421X
-    	tagListPanel = TagListPanel.load(primaryStage, getTagListPanelPlaceholder(), logic.getTagList());
+    	tagListPanel = TagListPanel.load(primaryStage, getTagListPanelPlaceholder(), logic.getUnmodifiableTagList());
         //@@author
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getUnmodifiableFilteredTaskList());
         resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
