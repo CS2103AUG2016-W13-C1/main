@@ -19,7 +19,7 @@ public class TagCard extends UiPart{
     
     public TagCard() {}
     
-    public static TagCard load(Tag tag){
+    public static TagCard load(Tag tag, int displayedIndex){
     	TagCard card = new TagCard();
         card.tag = tag;
         card.displayedIndex = displayedIndex;
