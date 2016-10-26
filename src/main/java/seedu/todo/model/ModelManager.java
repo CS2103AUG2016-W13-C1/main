@@ -1,6 +1,5 @@
 package seedu.todo.model;
 
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.todo.commons.core.ComponentManager;
 import seedu.todo.commons.core.LogsCenter;
@@ -8,6 +7,7 @@ import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.commons.events.model.ToDoListChangedEvent;
 import seedu.todo.model.qualifiers.*;
 import seedu.todo.model.tag.Tag;
+import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.UniqueTaskList;
@@ -26,13 +26,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final ToDoList toDoList;
     private final FilteredList<Task> filteredTasks;
-    private final FilteredList<Tag> filteredTags;
-
+    private final FilteredList<Task> todayTasks;
+    private final FilteredList<Tag> tagList;
+    
+    //@@author A0138967J
     /**
      * Initializes a ModelManager with the given ToDoList
      * ToDoList and its variables should not be null
      */
-    public ModelManager(ToDoList src, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyToDoList src, UserPrefs userPrefs) {
         super();
         assert src != null;
         assert userPrefs != null;
@@ -40,18 +42,16 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with to-do app: " + src + " and user prefs " + userPrefs);
 
         toDoList = new ToDoList(src);
-        filteredTags = new FilteredList<>(toDoList.getTags());
         filteredTasks = new FilteredList<>(toDoList.getTasks());
+        todayTasks = new FilteredList<>(toDoList.getTasks());
+        tagList = new FilteredList<>(toDoList.getTags());
+        updateTodayListToShowAll();
+ 
     }
-
+    //@@author
+    
     public ModelManager() {
         this(new ToDoList(), new UserPrefs());
-    }
-
-    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
-        toDoList = new ToDoList(initialData);
-        filteredTasks = new FilteredList<>(toDoList.getTasks());
-        filteredTags = new FilteredList<>(toDoList.getTags());
     }
 
     @Override
@@ -88,10 +88,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         toDoList.addTask(task);
-        updateFilteredListToShowAll();
         indicateToDoListChanged();
     }
     
+    //@@author A0093896H
     @Override
     public synchronized Task getTask(ReadOnlyTask target) throws TaskNotFoundException {
         int index = toDoList.getTasks().indexOf(target);
@@ -105,21 +105,10 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public synchronized void updateTask(ReadOnlyTask oldTask, ReadOnlyTask newTask) throws TaskNotFoundException {
-        int index = toDoList.getTasks().indexOf(oldTask);
-        
-        if (index < 0) {
-            throw new TaskNotFoundException();
-        } else {
-            toDoList.getTasks().get(index).setName(newTask.getName());
-            toDoList.getTasks().get(index).setDetail(newTask.getDetail());
-            toDoList.getTasks().get(index).setOnDate(newTask.getOnDate());
-            toDoList.getTasks().get(index).setByDate(newTask.getByDate());
-            toDoList.getTasks().get(index).setRecurrence(newTask.getRecurrence());
-            toDoList.syncTagsWithMasterList(toDoList.getTasks().get(index));
-            indicateToDoListChanged();
-        }
+        toDoList.updateTask(oldTask, newTask);
+        indicateToDoListChanged();
     }
-
+    
     @Override
     public synchronized void updateTaskTags(ReadOnlyTask oldTask, ReadOnlyTask newTask) throws TaskNotFoundException {
         int index = toDoList.getTasks().indexOf(oldTask);
@@ -131,21 +120,33 @@ public class ModelManager extends ComponentManager implements Model {
             indicateToDoListChanged();
         }
     }
+    //@@author
     
     //=========== Filtered Task List Accessors ===============================================================
-
+    
+    //@@author A0093896H
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList() {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
     
-    public UnmodifiableObservableList<Tag> getUnmodifiableTagList() {
-    	return new UnmodifiableObservableList<>(filteredTags);
-    }
+    public UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList() {
+        return new UnmodifiableObservableList<>(todayTasks);
+    } 
     
+    public UnmodifiableObservableList<Tag> getUnmodifiableTagList() {
+        return new UnmodifiableObservableList<>(tagList);
+    } 
+    
+    //@@author A0138967J
+    public void updateTodayListToShowAll() {
+        todayTasks.setPredicate((new PredicateExpression(new TodayDateQualifier(LocalDateTime.now())))::satisfies);
+    }
+
+    //@@author A0093896H
     @Override
     public void updateFilteredListToShowAll() {
-        updateFilteredTaskList(new PredicateExpression(new CompletedQualifier(true))); //false change
+        updateFilteredTaskList(new PredicateExpression(new CompletedQualifier(true))); //force change
         filteredTasks.setPredicate(null);
     }
     
@@ -171,7 +172,6 @@ public class ModelManager extends ComponentManager implements Model {
     
     @Override
     public void updateFilteredTaskListOnDate(LocalDateTime datetime){
-        
         updateFilteredTaskList(new PredicateExpression(new OnDateQualifier(datetime)));
     }
     
@@ -179,7 +179,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskListBeforeDate(LocalDateTime datetime){
         updateFilteredTaskList(new PredicateExpression(new BeforeDateQualifier(datetime)));
     }
-    
+
     @Override
     public void updateFilteredTaskListAfterDate(LocalDateTime datetime){
         updateFilteredTaskList(new PredicateExpression(new AfterDateQualifier(datetime)));
@@ -189,7 +189,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskListFromTillDate(LocalDateTime fromDateTime, LocalDateTime tillDateTime){
         updateFilteredTaskList(new PredicateExpression(new FromTillDateQualifier(fromDateTime, tillDateTime)));
     }
-    
+
+    @Override
+    public void updateFilteredTaskListByPriority(Priority priority) {
+        updateFilteredTaskList(new PredicateExpression(new PriorityQualifier(priority)));   
+    }
+
+    //@@author A0138967J-unused
+    @Override
+    public void updateFilteredTaskListTodayDate(LocalDateTime datetime){
+        updateFilteredTaskList(new PredicateExpression(new TodayDateQualifier(datetime)));
+    }
+    //@@author
     
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
@@ -211,8 +222,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         @Override
-        public boolean satisfies(ReadOnlyTask person) {
-            return qualifier.run(person);
+        public boolean satisfies(ReadOnlyTask task) {
+            return qualifier.run(task);
         }
 
         @Override
@@ -220,5 +231,6 @@ public class ModelManager extends ComponentManager implements Model {
             return qualifier.toString();
         }
     }
+
     
 }

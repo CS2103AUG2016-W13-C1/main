@@ -1,9 +1,10 @@
 package seedu.todo.model;
 
 import java.util.Set;
-import javafx.collections.ObservableList;
+
 import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.model.tag.Tag;
+import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.UniqueTaskList;
@@ -37,10 +38,14 @@ public interface Model {
     
     /** Update the given task's tags */
     void updateTaskTags(ReadOnlyTask oldTask, ReadOnlyTask newTask) throws UniqueTaskList.TaskNotFoundException;
-        
-    /** Returns the filtered person list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+       
+    /** Returns the filtered tasks list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList();
+
+    /** Returns the filtered today tasks list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList();
     
+    /** Returns the tag list as an {@code UnmodifiableObservableList<Tag>} */
     UnmodifiableObservableList<Tag> getUnmodifiableTagList();
     
     /** Updates the filter of the filtered task list to show all tasks */
@@ -69,4 +74,11 @@ public interface Model {
     
     /** Updates the filter of the filtered task list to filter by the given from and till dates*/
     void updateFilteredTaskListFromTillDate(LocalDateTime fromDateTime, LocalDateTime tillDateTime);
+    
+    /** Updates the filter of the filtered task list to filter for today's date only */
+    void updateFilteredTaskListTodayDate(LocalDateTime datetime);
+    
+    /** updates the filter of the filtered task list to filter by the given priority level*/
+	void updateFilteredTaskListByPriority(Priority priority);
+    
 }
