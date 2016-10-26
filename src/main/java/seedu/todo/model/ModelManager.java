@@ -7,7 +7,7 @@ import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.commons.events.model.ToDoListChangedEvent;
 import seedu.todo.model.qualifiers.*;
 import seedu.todo.model.tag.Tag;
-import seedu.todo.model.task.Priority;
+//import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
 import seedu.todo.model.task.UniqueTaskList;

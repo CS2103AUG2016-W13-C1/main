@@ -1,6 +1,5 @@
 package seedu.todo.ui;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -31,7 +30,7 @@ public class MainWindow extends UiPart {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    //private BrowserPanel browserPanel;
     private TaskListPanel taskListPanel;
     private ResultDisplay resultDisplay;
     private StatusBarFooter statusBarFooter;
@@ -115,7 +114,7 @@ public class MainWindow extends UiPart {
     }
 
     public void fillInnerParts() {
-        browserPanel = BrowserPanel.load(browserPlaceholder);
+        //browserPanel = BrowserPanel.load(browserPlaceholder);
     	//@@author A0142421X
     	tagListPanel = TagListPanel.load(primaryStage, getTagListPanelPlaceholder(), logic.getUnmodifiableTagList());
         //@@author
@@ -202,10 +201,10 @@ public class MainWindow extends UiPart {
     }
 
     public void loadTaskPage(ReadOnlyTask task) {
-        browserPanel.loadTaskPage(task);
+        //browserPanel.loadTaskPage(task);
     }
 
     public void releaseResources() {
-        browserPanel.freeResources();
+        //browserPanel.freeResources();
     }
 }
