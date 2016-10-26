@@ -6,6 +6,7 @@ import seedu.todo.commons.core.LogsCenter;
 import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.commons.events.model.ToDoListChangedEvent;
 import seedu.todo.model.qualifiers.*;
+import seedu.todo.model.tag.Tag;
 import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
@@ -26,13 +27,14 @@ public class ModelManager extends ComponentManager implements Model {
     private final ToDoList toDoList;
     private final FilteredList<Task> filteredTasks;
     private final FilteredList<Task> todayTasks;
+    private final FilteredList<Tag> tagList;
     
     //@@author A0138967J
     /**
      * Initializes a ModelManager with the given ToDoList
      * ToDoList and its variables should not be null
      */
-    public ModelManager(ToDoList src, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyToDoList src, UserPrefs userPrefs) {
         super();
         assert src != null;
         assert userPrefs != null;
@@ -42,6 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         todayTasks = new FilteredList<>(toDoList.getTasks());
+        tagList = new FilteredList<>(toDoList.getTags());
         updateTodayListToShowAll();
  
     }
@@ -49,14 +52,6 @@ public class ModelManager extends ComponentManager implements Model {
     
     public ModelManager() {
         this(new ToDoList(), new UserPrefs());
-    }
-    
-    //@@author A0093896H
-    public ModelManager(ReadOnlyToDoList initialData, UserPrefs userPrefs) {
-        toDoList = new ToDoList(initialData);
-        filteredTasks = new FilteredList<>(toDoList.getTasks());
-        todayTasks = new FilteredList<>(toDoList.getTasks());
-        updateTodayListToShowAll();
     }
 
     @Override
@@ -138,6 +133,11 @@ public class ModelManager extends ComponentManager implements Model {
     public UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList() {
         return new UnmodifiableObservableList<>(todayTasks);
     } 
+    
+    public UnmodifiableObservableList<Tag> getUnmodifiableTagList() {
+        return new UnmodifiableObservableList<>(tagList);
+    } 
+    
     //@@author A0138967J
     public void updateTodayListToShowAll() {
         todayTasks.setPredicate((new PredicateExpression(new TodayDateQualifier(LocalDateTime.now())))::satisfies);

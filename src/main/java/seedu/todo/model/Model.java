@@ -3,6 +3,7 @@ package seedu.todo.model;
 import java.util.Set;
 
 import seedu.todo.commons.core.UnmodifiableObservableList;
+import seedu.todo.model.tag.Tag;
 import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
 import seedu.todo.model.task.Task;
@@ -41,8 +42,11 @@ public interface Model {
     /** Returns the filtered tasks list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList();
 
-    /** Returns the filtered tasks list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
+    /** Returns the filtered today tasks list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList();
+    
+    /** Returns the tag list as an {@code UnmodifiableObservableList<Tag>} */
+    UnmodifiableObservableList<Tag> getUnmodifiableTagList();
     
     /** Updates the filter of the filtered task list to show all tasks */
     void updateFilteredListToShowAll();
