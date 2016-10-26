@@ -16,8 +16,10 @@ public interface Logic {
      */
     CommandResult execute(String commandText);
 
-    /** Returns the unmodfiable filtered list of tasks */
+    /** Returns the unmodifiable filtered list of tasks */
     ObservableList<ReadOnlyTask> getUnmodifiableFilteredTaskList();
+
+    ObservableList<ReadOnlyTask> getUnmodifiableTodayTaskList();
     
-    ObservableList<Tag> getTagList();
+    ObservableList<Tag> getUnmodifiableTagList();
 }
