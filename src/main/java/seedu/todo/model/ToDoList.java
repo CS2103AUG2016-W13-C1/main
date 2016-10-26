@@ -170,7 +170,7 @@ public class ToDoList implements ReadOnlyToDoList {
             getTasks().get(index).setDetail(newTask.getDetail());
             getTasks().get(index).setOnDate(newTask.getOnDate());
             getTasks().get(index).setByDate(newTask.getByDate());
-            getTasks().get(index).setPriority(newTask.getPriority());
+            //getTasks().get(index).setPriority(newTask.getPriority());
             getTasks().get(index).setRecurrence(newTask.getRecurrence());
             syncTagsWithMasterList(getTasks().get(index));
             return true;
