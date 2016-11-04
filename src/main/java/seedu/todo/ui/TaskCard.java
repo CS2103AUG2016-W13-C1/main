@@ -1,5 +1,7 @@
 package seedu.todo.ui;
 
+import java.time.LocalDateTime;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -7,8 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import seedu.todo.commons.util.DateTimeUtil;
 import seedu.todo.model.task.Priority;
 import seedu.todo.model.task.ReadOnlyTask;
+import seedu.todo.model.task.TaskDate;
 
 public class TaskCard extends UiPart{
 
@@ -55,6 +59,11 @@ public class TaskCard extends UiPart{
         	name.setFill(Color.LIGHTGREY);
         	name.setStyle("-fx-strikethrough: true");
         	name.setOpacity(50);
+        } else if (task.getByDate() != null && 
+        		DateTimeUtil.beforeOther(task.getByDate(), new TaskDate(LocalDateTime.now()))) {
+        	name.setFill(Color.RED);
+        } else {
+        	name.setFill(Color.BLACK);
         }
         
         id.setText(displayedIndex + ". ");
@@ -81,7 +90,9 @@ public class TaskCard extends UiPart{
             recurrence.setText("");
         }
         
-    	if (task.getCompletion().isCompleted()) {
+    	if (task.getCompletion().isCompleted() || 
+    			(task.getByDate() != null && 
+        		DateTimeUtil.beforeOther(task.getByDate(), new TaskDate(LocalDateTime.now())))) {
     		priorityLevel.setFill(Color.WHITE);
     		priorityLevel.setStroke(Color.WHITE);
     	} else if (task.getPriority().toString().equals(Priority.LOW)) {
