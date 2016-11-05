@@ -10,7 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.todo.commons.core.LogsCenter;
 import seedu.todo.commons.events.ui.IncorrectCommandAttemptedEvent;
+import seedu.todo.commons.events.ui.SummaryPanelSelectionEvent;
 import seedu.todo.commons.events.ui.TagPanelSelectionEvent;
+import seedu.todo.commons.events.ui.WeekSummaryPanelSelectionEvent;
 import seedu.todo.commons.util.FxViewUtil;
 import seedu.todo.logic.Logic;
 import seedu.todo.logic.commands.*;
@@ -124,6 +126,15 @@ public class CommandBox extends UiPart {
     @Subscribe
     private void handleTagPanelSelectionEvent(TagPanelSelectionEvent tpse){
         resultDisplay.postMessage("Displaying list of tasks with tag: " + tpse.tag.getName());
+    }
+
+    @Subscribe
+    private void handleSummaryPanelSelectionEvent(SummaryPanelSelectionEvent spse){
+        resultDisplay.postMessage("Displaying list of tasks today");
+    }
+    @Subscribe
+    private void handleWeekSummaryPanelSelectionEvent(WeekSummaryPanelSelectionEvent wpse){
+        resultDisplay.postMessage("Displaying list of tasks for next 7 days");
     }
     
     

@@ -11,6 +11,8 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import seedu.todo.commons.events.ui.SummaryPanelSelectionEvent;
+import seedu.todo.commons.events.ui.TagPanelSelectionEvent;
 import seedu.todo.model.task.ReadOnlyTask;
 
 import java.time.LocalDate;
@@ -61,6 +63,8 @@ public class SummaryPanel extends UiPart {
     private void setConnections(ObservableList<ReadOnlyTask> taskList) {
         summaryListView.setItems(taskList);
         summaryListView.setCellFactory(listView -> new TaskListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+
     }
 
     private void addToPlaceholder() {
@@ -73,6 +77,15 @@ public class SummaryPanel extends UiPart {
         Platform.runLater(() -> {
             summaryListView.scrollTo(index);
             summaryListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+    
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        summaryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                raise(new SummaryPanelSelectionEvent());
+            }
         });
     }
 

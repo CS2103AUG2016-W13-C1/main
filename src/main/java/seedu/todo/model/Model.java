@@ -99,10 +99,13 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given from and till dates*/
     void updateFilteredTaskListFromTillDate(LocalDateTime fromDateTime, LocalDateTime tillDateTime, 
             SearchCompletedOption option);
-    //@@author
-    
+    //@@author A0138967J
+
     /** Updates the filter of the filtered task list to filter for today's date only */
     void updateFilteredTaskListTodayDate(LocalDateTime datetime);
+
+    /** Updates the filter of the filtered task list to filter for the week's date only */
+    void updateFilteredTaskListWeekDate(LocalDateTime datetime);
     
     //@@author A0121643R
     /** updates the filter of the filtered task list to filter by the given priority level*/
