@@ -47,6 +47,14 @@ public class TaskDate {
             }  
         }
     }
+    /**
+     * overload constructor of TaskDate
+     * @param LocalDateTime ldt
+     */
+    public TaskDate(LocalDateTime ldt) {
+    	this.date = ldt.toLocalDate();
+    	this.time = ldt.toLocalTime();
+    }
 
     public LocalDate getDate() {
         return this.date;
