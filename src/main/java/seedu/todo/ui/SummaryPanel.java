@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.todo.commons.events.ui.SummaryPanelSelectionEvent;
-import seedu.todo.commons.events.ui.TagPanelSelectionEvent;
 import seedu.todo.model.task.ReadOnlyTask;
 
 import java.time.LocalDate;
@@ -84,7 +83,7 @@ public class SummaryPanel extends UiPart {
     private void setEventHandlerForSelectionChangeEvent() {
         summaryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                raise(new SummaryPanelSelectionEvent());
+                raise(new SummaryPanelSelectionEvent(newValue));
             }
         });
     }
