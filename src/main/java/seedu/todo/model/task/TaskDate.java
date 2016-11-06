@@ -73,16 +73,16 @@ public class TaskDate implements Comparable<TaskDate>{
     
 	@Override
 	public int compareTo(TaskDate other) {
-		if(!this.equals(other)) {
-			if (other == null) {
-				return -1;
-			} else if (DateTimeUtil.beforeOther(this, other)) {
-				return -1;
-			} else {
-				return 1;
-			}
-		} else {
+		if (this.getDate() == null && other.getDate() == null) {
 			return 0;
+		} else if (this.getDate() == null) {
+			return 1;
+		} else if (other.getDate() == null) {
+			return -1;
+		} else if (this.getDate().equals(other.getDate())) {
+			return this.getTime().compareTo(other.getTime());			
+		} else {
+			return this.getDate().compareTo(other.getDate());
 		}
 	}
 
