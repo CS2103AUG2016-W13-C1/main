@@ -11,17 +11,14 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import seedu.todo.commons.core.LogsCenter;
+import seedu.todo.commons.events.ui.WeekSummaryPanelSelectionEvent;
 import seedu.todo.model.task.ReadOnlyTask;
-
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
 /**
  * Panel containing the list of tasks.
  */
 public class WeekSummaryPanel extends UiPart {
-    private final Logger logger = LogsCenter.getLogger(WeekSummaryPanel.class);
     private static final String FXML = "WeekSummaryPanel.fxml";
     private VBox panel;
     private AnchorPane placeHolderPane;
@@ -64,6 +61,8 @@ public class WeekSummaryPanel extends UiPart {
     private void setConnections(ObservableList<ReadOnlyTask> taskList) {
         weekSummaryListView.setItems(taskList);
         weekSummaryListView.setCellFactory(listView -> new TaskListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+
     }
 
     private void addToPlaceholder() {
@@ -78,6 +77,13 @@ public class WeekSummaryPanel extends UiPart {
         });
     }
 
+    private void setEventHandlerForSelectionChangeEvent() {
+        weekSummaryListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                raise(new WeekSummaryPanelSelectionEvent(newValue));
+            }
+        });
+    }
     class TaskListViewCell extends ListCell<ReadOnlyTask> {
 
         public TaskListViewCell() {

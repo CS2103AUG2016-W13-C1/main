@@ -6,6 +6,8 @@ import seedu.todo.commons.core.LogsCenter;
 import seedu.todo.commons.core.UnmodifiableObservableList;
 import seedu.todo.commons.events.model.ToDoListChangedEvent;
 import seedu.todo.commons.events.ui.TagPanelSelectionEvent;
+import seedu.todo.commons.events.ui.WeekSummaryPanelSelectionEvent;
+import seedu.todo.commons.events.ui.SummaryPanelSelectionEvent;
 import seedu.todo.logic.commands.SearchCommand.SearchCompletedOption;
 import seedu.todo.model.expressions.Expression;
 import seedu.todo.model.expressions.PredicateExpression;
@@ -221,11 +223,26 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredTaskList(new PredicateExpression(new PriorityQualifier(priority, option)));   
     }
 
-    //@@author A0138967J-unused
+    //@@author A0138967J
     @Override
     public void updateFilteredTaskListTodayDate(LocalDateTime datetime){
         updateFilteredTaskList(new PredicateExpression(new TodayDateQualifier(datetime)));
     }
+
+    @Subscribe
+    public void handleSummaryPanelSelectionEvent(SummaryPanelSelectionEvent spse) {
+        this.updateFilteredTaskListTodayDate(LocalDateTime.now());
+    }
+    @Override
+    public void updateFilteredTaskListWeekDate(LocalDateTime datetime){
+        updateFilteredTaskList(new PredicateExpression(new WeekDateQualifier(datetime)));
+    }
+
+    @Subscribe
+    public void handleWeekSummaryPanelSelectionEvent(WeekSummaryPanelSelectionEvent wpse) {
+        this.updateFilteredTaskListWeekDate(LocalDateTime.now());
+    }
+    
     //@@author
     
     private void updateFilteredTaskList(Expression expression) {
@@ -237,6 +254,6 @@ public class ModelManager extends ComponentManager implements Model {
     private void handleTagPanelSelectionEvent(TagPanelSelectionEvent tpse) {
         this.updateFilteredTaskListByTag(tpse.tag.getName(), SearchCompletedOption.UNDONE);
     }
-    
+
     
 }
