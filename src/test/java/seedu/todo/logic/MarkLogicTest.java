@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import seedu.todo.commons.exceptions.IllegalValueException;
 import seedu.todo.logic.commands.MarkCommand;
+import seedu.todo.model.DoDoBird;
 import seedu.todo.model.task.Completion;
 import seedu.todo.model.task.Task;
 
@@ -26,7 +27,7 @@ public class MarkLogicTest extends CommandLogicTest {
         assertCommandBehavior("mark 1",
                 String.format(MarkCommand.MESSAGE_SUCCESS, toBeMarked.getName()),
                 expectedTDL,
-                expectedTDL.getTaskList());
+                (new DoDoBird()).getTaskList());
     }
     //@@author A0138967J
     @Test
@@ -41,7 +42,7 @@ public class MarkLogicTest extends CommandLogicTest {
         assertCommandBehavior("mark 1",
                 String.format(MarkCommand.MESSAGE_SUCCESS, toBeMarkedToday.getName()),
                 expectedTDL,
-                expectedTDL.getTaskList());
+                (new DoDoBird()).getTaskList());
     }
     //@@author
 
