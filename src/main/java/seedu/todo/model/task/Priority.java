@@ -8,7 +8,7 @@ import seedu.todo.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidpriority(String)}
  */
 //@@author A0121643R
-public class Priority {
+public class Priority implements Comparable<Priority> {
 
     public static final String PRIORITY_RULE = "Task priority should be high, mid or low";
     public static final String PRIORITY_REGEX = "(high|mid|low)";
@@ -57,5 +57,26 @@ public class Priority {
     public int hashCode() {
         return priorityLevel.hashCode();
     }
+    
+    /**
+     * higher priority is smaller so that can be shown in front
+     */
+
+	@Override
+	public int compareTo(Priority other) {
+		if(! this.priorityLevel.equals(other)) {
+			if (this.priorityLevel.equals(HIGH)) {
+				return -1;
+			} else if (this.priorityLevel.equals(LOW)) {
+				return 1;
+			} else if (this.priorityLevel.equals(MID) && other.priorityLevel.equals(HIGH)) {
+				return 1;
+			} else {
+				return -1;
+			}
+		} else {
+			return 0;
+		}
+	}
 
 }

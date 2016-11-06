@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * 
  * Guarantees: valid as long as natty can parse it. The parsing is done in using DateTimeUtil.
  */
-public class TaskDate {
+public class TaskDate implements Comparable<TaskDate>{
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS = "Do-Do Bird is unable to recognise "
             + "the date and time you entered.\n Please try again! You can refer to our help manual"
@@ -65,6 +65,26 @@ public class TaskDate {
     public LocalTime setTime(LocalTime time) {
         return this.time = time;
     }
+  //@@author A0121643R
+    
+    /**
+     * earlier date is smaller so that it can be shown before task with later date
+     */
+    
+	@Override
+	public int compareTo(TaskDate other) {
+		if(!this.equals(other)) {
+			if (other == null) {
+				return -1;
+			} else if (DateTimeUtil.beforeOther(this, other)) {
+				return -1;
+			} else {
+				return 1;
+			}
+		} else {
+			return 0;
+		}
+	}
 
     @Override
     public String toString() {
@@ -100,5 +120,6 @@ public class TaskDate {
     public int hashCode() {
         return this.toString().hashCode();
     }
+
 
 }
