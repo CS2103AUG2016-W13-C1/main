@@ -1,6 +1,7 @@
 package seedu.todo.model;
 
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.todo.commons.core.ComponentManager;
 import seedu.todo.commons.core.LogsCenter;
 import seedu.todo.commons.core.UnmodifiableObservableList;
@@ -36,6 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Task> todayTasks; //for today summary list
     private final FilteredList<Task> weekTasks; //for weekly summary list
     private final FilteredList<Tag> tagList;
+    private SortedList<Task> sortedTasks;
     
     //@@author A0138967J
     /**
@@ -54,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
         todayTasks = new FilteredList<>(dodobird.getTasks());
         weekTasks = new FilteredList<>(dodobird.getTasks());
         tagList = new FilteredList<>(dodobird.getTags());
+        sortedTasks = new SortedList<>(filteredTasks, Task.getTaskComparator());
         
         updateFilteredListToShowAllNotCompleted();
         updateTodayListToShowAll();
@@ -130,10 +133,20 @@ public class ModelManager extends ComponentManager implements Model {
     
     //=========== Filtered Task List Accessors ===============================================================
     
-    //@@author A0093896H
+    //@@author A0121643R
+    
     @Override
     public UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList() {
-        return new UnmodifiableObservableList<>(filteredTasks);
+        return getSortedTaskList();
+    }
+
+    /**
+     * Sorts filtered list based on bydate, priority, name
+     */
+    @Override
+    public UnmodifiableObservableList<ReadOnlyTask> getSortedTaskList() {
+        sortedTasks = new SortedList<>(filteredTasks, Task.getTaskComparator());
+        return new UnmodifiableObservableList<>(sortedTasks);
     }
     
     //@@author A0138967J
