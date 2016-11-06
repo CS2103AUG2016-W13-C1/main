@@ -224,7 +224,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Subscribe
-    private void handleSummaryPanelSelectionEvent(SummaryPanelSelectionEvent spse) {
+    public void handleSummaryPanelSelectionEvent(SummaryPanelSelectionEvent spse) {
         this.updateFilteredTaskListTodayDate(LocalDateTime.now());
     }
     @Override
@@ -233,7 +233,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Subscribe
-    private void handleWeekSummaryPanelSelectionEvent(WeekSummaryPanelSelectionEvent wpse) {
+    public void handleWeekSummaryPanelSelectionEvent(WeekSummaryPanelSelectionEvent wpse) {
         this.updateFilteredTaskListWeekDate(LocalDateTime.now());
     }
     

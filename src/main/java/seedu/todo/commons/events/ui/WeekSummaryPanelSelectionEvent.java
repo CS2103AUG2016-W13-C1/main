@@ -6,7 +6,7 @@ import seedu.todo.model.task.ReadOnlyTask;
 
 public class WeekSummaryPanelSelectionEvent extends BaseEvent {
     
-    ReadOnlyTask task;
+    private ReadOnlyTask task;
     
     public WeekSummaryPanelSelectionEvent(ReadOnlyTask task) {
         this.task = task;
